@@ -5,6 +5,7 @@ import com.example.demo.model.persistence.User;
 import com.example.demo.model.persistence.repositories.CartRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
 import com.example.demo.model.requests.CreateUserRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -30,12 +32,14 @@ public class UserController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
+        log.info("Get user by id {}", id);
         return ResponseEntity.of(userRepository.findById(id));
     }
 
     @GetMapping("/{username}")
     public ResponseEntity<User> findByUserName(@PathVariable String username) {
         User user = userRepository.findByUsername(username);
+        log.info("Get user by username {}", username);
         return user == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(user);
     }
 
@@ -49,12 +53,12 @@ public class UserController {
 
         if (createUserRequest.getPassword().length() < 5 ||
                 !createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())) {
-            //TODO add SL4J logger
+            log.error("Submitted password is incorrect");
             return ResponseEntity.badRequest().build();
         }
         user.setPassword(encodePassword(createUserRequest));
         userRepository.save(user);
-
+        log.info("User is created with username {}", createUserRequest.getUsername());
         return ResponseEntity.ok(user);
     }
 
