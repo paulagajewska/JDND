@@ -8,7 +8,7 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh 'mvn install'
+                sh 'mvn -f "projects/P04-eCommerce Application/starter_code/pom.xml" install'
             }
             post {
                 success {
