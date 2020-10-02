@@ -13,9 +13,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.math.BigDecimal;
 import java.net.URI;
 
+import static com.example.demo.controllers.TestHelper.getItem;
+import static com.example.demo.controllers.TestHelper.getValidJwtToken;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -108,8 +109,6 @@ public class ItemControllerIT {
     @Test
     public void getItemsByName_http_ok() throws Exception {
         //given
-        Item item = getItem();
-        item.setName("valid_item_name");
         Item saveItem = itemRepository.save(getItem());
         int id = Math.toIntExact(saveItem.getId());
 
@@ -142,18 +141,5 @@ public class ItemControllerIT {
         mvc.perform(
                 get(new URI("/api/item/invalid_item_name")))
                 .andExpect(status().isForbidden());
-    }
-
-    private String getValidJwtToken() {
-        return "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNjg3NTIwNzk1fQ.Pcef87avJHpAu6ZN84yiJYPxz2NNcSyAdcerfaKEua2rJpBNMZDVoU4gi_-F5W0rDwyy3ndcTn6964WCl6W3Gw";
-    }
-
-    private Item getItem() {
-        Item item = new Item();
-        item.setName("itemName");
-        item.setDescription("itemDescription");
-        item.setPrice(BigDecimal.valueOf(11));
-
-        return item;
     }
 }

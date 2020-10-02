@@ -30,7 +30,7 @@ public class UserOrder {
 	@Column
 	private Long id;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany()
 	@JsonProperty
 	@Column
     private List<Item> items;

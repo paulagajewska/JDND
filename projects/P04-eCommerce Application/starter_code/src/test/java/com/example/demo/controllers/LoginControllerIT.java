@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,9 +23,6 @@ public class LoginControllerIT {
 
     @Autowired
     private MockMvc mvc;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Test
     public void login_http_ok() throws Exception {
@@ -56,7 +52,4 @@ public class LoginControllerIT {
                 .andExpect(status().isUnauthorized());
     }
 
-    private String encodePassword(String password) {
-        return bCryptPasswordEncoder.encode(password);
-    }
 }
