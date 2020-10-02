@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-class ItemUT {
+class ItemUnitTest {
 
     @Test
     void hashCode_ItemIdIsNull() {

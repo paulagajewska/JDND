@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-class UserOrderUT {
+class UserOrderUnitTest {
 
     @Test
     void createFromCart() {
@@ -27,7 +27,6 @@ class UserOrderUT {
         Assertions.assertEquals("password", fromCart.getUser().getPassword());
 
         Assertions.assertEquals(cart.getTotal(), fromCart.getTotal());
-
     }
 
     private Cart createCart(List<Item> items, BigDecimal total) {

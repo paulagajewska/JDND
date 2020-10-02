@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-class CartUT {
+class CartUnitTest {
 
     @Test
     void addItem_whenItemAndTotalIsNull() {
