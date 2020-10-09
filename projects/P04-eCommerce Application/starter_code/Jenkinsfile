@@ -1,20 +1,33 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.1.1'
+        maven 'Maven 3.6.3'
         jdk 'jdk8'
     }
     stages {
 
-        stage ('Build') {
+        stage('Checkout ') {
             steps {
-                sh 'mvn -f "projects/P04-eCommerce Application/starter_code/pom.xml" install'
-            }
-            post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml'
-                }
+                git branch: 'master',
+                url: 'https://github.com/paulagajewska/JDND.git/'
+
+                sh "ls -lat"
             }
         }
+        stage ('Build') {
+            steps {
+                sh './mvnw -f "projects/P04-eCommerce Application/starter_code/pom.xml" clean compile'
+            }
+        }
+        stage ('Unit Test') {
+            steps {
+                sh './mvnw -f "projects/P04-eCommerce Application/starter_code/pom.xml" test'
+            }
+        }
+        stage ('Integration Test') {
+             steps {
+                  sh './mvnw -f "projects/P04-eCommerce Application/starter_code/pom.xml" verify -Psurefile'
+             }
+       }
     }
 }
